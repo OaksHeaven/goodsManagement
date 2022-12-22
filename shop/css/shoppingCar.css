@@ -1,0 +1,137 @@
+/* 声明字体图标 这里一定要注意路径的变化 */
+@font-face {
+    font-family: 'icomoon';
+    src: url('../fonts/icomoon.eot?tomleg');
+    src: url('../fonts/icomoon.eot?tomleg#iefix') format('embedded-opentype'),
+        url('../fonts/icomoon.ttf?tomleg') format('truetype'),
+        url('../fonts/icomoon.woff?tomleg') format('woff'),
+        url('../fonts/icomoon.svg?tomleg#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+.thisShopcar {
+    position: absolute;
+    left: 190px;
+    top: 20px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    font-size: 40px;
+    border-left: 1px solid #c81523;
+    padding-left: 10px;
+}
+
+.thisShopcar::before {
+    content: '\e93a';
+    font-family: 'icomoon';
+    margin-right: 5px;
+    color: #b1191a;
+}
+
+.car_items {
+    background-color: rgb(230, 230, 230);
+    display: flex;
+    height: 80px;
+    align-items: center;
+    border: 1px solid rgb(71, 71, 71);
+    margin: 5px 0;
+}
+
+
+/*  提交购物车购买 */
+.shopCar_submit {
+    width: 200px;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.shopCar_submit div {
+    font-size: 18px;
+}
+
+.shopCar_submit .total_money {
+    color: red !important;
+}
+
+.shopCar_submit button {
+    width: 80px;
+    height: 32px;
+    background-color: #b1191a;
+    font-size: 16px;
+    color: #fff;
+}
+
+/*选中块*/
+.car_item_check {
+    height: 100%;
+    width: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 生成一个伪元素，作为美化版的单选按钮，给伪元素添加一些样式 */
+input[type="checkbox"]+div {
+    /*不换行空格*/
+    display: block;
+    font-size: 18px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid #01cd78;
+    text-indent: .15em;
+    line-height: 1;
+}
+
+/* 给复选按钮的勾选状态添加不同的样式 */
+input[type="checkbox"]:checked+div {
+    background-color: #01cd78;
+    background-clip: content-box;
+    padding: 2px;
+}
+
+/* 隐藏复选框 */
+input[type="checkbox"] {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+}
+
+/* 购物车信息*/
+.car_items a {
+    width: 100%;
+}
+
+.car_item_info {
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+}
+
+.car_item_info div {
+    margin: 0 50px;
+}
+
+.car_item_info img {
+    background-color: honeydew;
+    height: 80px;
+    width: 80px;
+}
+
+/* 数量 */
+.car_item_info div:nth-child(3) {
+    border: rgb(122, 117, 117) 2px solid;
+    border-radius: 15%;
+}
+
+/* 价格 */
+.car_item_info div:nth-child(4) {
+    font-size: 20px;
+    color: red;
+}

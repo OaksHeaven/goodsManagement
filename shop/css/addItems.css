@@ -1,0 +1,22 @@
+.item_info {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.item_info form {
+  display: flex;
+  flex-direction: column;
+}
+
+.item_info form input {
+  height: 30px;
+  font-size: 20px;
+  padding: 0 20px;
+  margin-bottom: 20px;
+}
+
+#chooseImg {
+  padding: 0 20px;
+  font-size: 20px;
+  width: 200px;
+}

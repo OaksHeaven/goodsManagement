@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>shopping！</title>
+    <!-- 引入favicon图标 -->
+    <link rel="shortcut icon" href="favicon.ico" />
+    <!-- 引入我们初始化样式文件 -->
+    <link rel="stylesheet" href="css/base.css" />
+    <!-- 引入我们公共的样式文件 -->
+    <link rel="stylesheet" href="css/common.css" />
+    <!-- 引入我们列表页的css文件 -->
+    <link rel="stylesheet" href="css/addItems.css" />
+  </head>
+
+  <body>
+    <!-- 快捷导航模块 start -->
+    <section class="shortcut">
+      <div class="w">
+        <div class="fl">
+          <ul>
+            <li>shopping！&nbsp;</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- 快捷导航模块 end -->
+    <!-- header头部模块制作 start -->
+    <header class="header w">
+      <!-- logo模块 -->
+      <div class="logo">
+        <h1>
+          <a href="index.html" title="品优购商城">品优购商城</a>
+        </h1>
+      </div>
+      <!-- search搜索模块 -->
+      <div class="search">
+        <input type="search" name="" id="" placeholder="搜索商品" />
+        <button>搜索</button>
+      </div>
+      <!-- 购物车模块 -->
+      <div class="logout">退出登录</div>
+    </header>
+    <!-- header头部模块制作 end -->
+
+    <nav class="nav"></nav>
+    <div class="item_info">
+      <form action="javascript:void (0)" method="post" enctype="multipart/form-data" id="formId">
+        <input type="text" name="race" placeholder="商品种类" />
+        <input type="text" name="name" placeholder="商品名" />
+        <input type="text" name="price" placeholder="卖价" />
+        <input type="text" name="purchase_price" placeholder="采购价" />
+        <input type="text" name="quantity" placeholder="数量" />
+        <li>
+          <i id="chooseImg" style="display: inline">请选择图片</i>
+          <input type="file" name="photo" style="display: inline" />
+        </li>
+        <input type="submit" id="btn" style="cursor: pointer" />
+      </form>
+      <!-- <button id="btn">上传</button> -->
+    </div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="./js/search.js"></script>
+  <script src="./js/ifLogIn.js"></script>
+  <script>
+    let form = document.querySelector("#formId");
+    let btn = document.querySelector("#btn");
+    btn.addEventListener("click", () => {
+      let formData = new FormData(form);
+
+      //将文件改为二进制blob
+      let resultFile = formData.get("photo"); //获取文件
+      // const aBlob = new Blob([resultFile]); // 指定转换成blob的类型
+      //       const reader = new FileReader(); // 3 新建 FileReader 对象,用于操作文件
+      //       reader.readAsDataURL(aBlob); // 4 将文件转换成指定类型的数据
+      //       reader.onload = ev => {
+      //         const base64Url = ev.target.result; // 5 base64内容
+      //         console.log(base64Url);
+      //       };
+      // formData.delete("photo"); //去除表单中的图像文件
+      // formData.append("photo_blob", aBlob); //向表单中添加图片二进制信息
+      // console.log(formData.get("photo_blob"));
+
+      //定义请求对象
+      let postData = {
+        race: formData.get("race"),
+        name: formData.get("name"),
+        price: formData.get("price"),
+        quantity: formData.get("quantity"),
+        photo_blob: formData.get("photo_blob"),
+      };
+
+      console.log(postData.photo);
+      axios
+        .post("/api/addItem", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        })
+        .then(res => {
+          console.log(res);
+          alert(res.data);
+        });
+    });
+  </script>
+</html>

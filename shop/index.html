@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>shopping!</title>
+
+    <!-- 引入favicon图标 -->
+    <link rel="shortcut icon" href="favicon.ico" />
+    <!-- 引入我们初始化样式文件 -->
+    <link rel="stylesheet" href="css/base.css" />
+    <!-- 引入我们公共的样式文件 -->
+    <link rel="stylesheet" href="css/common.css" />
+    <!-- 引入我们index.css文件  -->
+    <link rel="stylesheet" href="css/index.css" />
+  </head>
+
+  <body>
+    <!-- 快捷导航模块 start -->
+    <section class="shortcut">
+      <div class="w">
+        <div class="fl">
+          <ul>
+            <li>shopping！&nbsp;</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- 快捷导航模块 end -->
+    <!-- header头部模块制作 start -->
+    <header class="header w">
+      <!-- logo模块 -->
+      <div class="logo">
+        <h1>
+          <a href="index.html" title="品优购商城">品优购商城</a>
+        </h1>
+      </div>
+      <!-- search搜索模块 -->
+      <div class="search">
+        <input type="search" name="" id="" placeholder="搜索商品" />
+        <button>搜索</button>
+      </div>
+      <!-- hotwords模块制作 -->
+      <div class="hotwords"></div>
+      <!-- 购物车模块 -->
+      <div class="logout">退出登录</div>
+    </header>
+    <!-- header头部模块制作 end -->
+    <!-- nav模块制作 start -->
+    <nav class="nav">
+      <div class="w">
+        <div class="dropdown">
+          <div class="dt">全部商品分类</div>
+          <div class="dd">
+            <ul id="dd_productions">
+              <li id="add_class" class="dd_li">
+                <a href="javascript:void (0)">添加商品种类</a>
+              </li>
+              <li id="add_class" class="dd_li">
+                <a href="list.html?name=all_productions" target="_blank">所有商品</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="navitems"></div>
+      </div>
+    </nav>
+    <!-- nav模块制作 end -->
+    <!-- 首页专有的模块 main  start -->
+    <div class="w">
+      <div class="main">
+        <div class="focus">
+          <ul>
+            <li>
+              <img src="upload/focus1.png" alt="" />
+            </li>
+          </ul>
+        </div>
+        <div class="newsflash">
+          <div class="news">
+            <div class="news-hd">
+              <h5>快报</h5>
+            </div>
+            <div class="news-bd">
+              <ul>
+                <li>
+                  <a href="#">
+                    <strong>[重磅]</strong>
+                    webShop已上线
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <strong>[重磅]</strong>
+                    支持搜索功能
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <strong>[重磅]</strong>
+                    左侧导航栏快速选择分类
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <strong>[重磅]</strong>
+                    右上角进入购物车
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <strong>[重磅]</strong>
+                    赶快体验吧！
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="lifeservice">
+            <ul></ul>
+          </div>
+          <div class="bargain">
+            <img src="upload/bargain.png" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="./js/index.js"></script>
+  <script src="./js/search.js"></script>
+  <script src="./js/ifLogIn.js"></script>
+</html>
