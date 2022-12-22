@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Shopping！</title>
+
+    <!-- 引入favicon图标 -->
+    <link rel="shortcut icon" href="favicon.ico" />
+    <!-- 引入我们初始化样式文件 -->
+    <link rel="stylesheet" href="css/base.css" />
+    <!-- 引入我们公共的样式文件 -->
+    <link rel="stylesheet" href="css/common.css" />
+    <!-- 引入我们列表页的css文件 -->
+    <link rel="stylesheet" href="css/list.css" />
+    <!--引入物品页的css文件-->
+    <link rel="stylesheet" href="css/items.css" />
+  </head>
+
+  <body>
+    <!-- 快捷导航模块 start -->
+    <section class="shortcut">
+      <div class="w">
+        <div class="fl">
+          <ul>
+            <li>shopping！&nbsp;</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- 快捷导航模块 end -->
+    <!-- header头部模块制作 start -->
+    <header class="header w">
+      <!-- logo模块 -->
+      <div class="logo">
+        <h1>
+          <a href="index.html" title="品优购商城">品优购商城</a>
+        </h1>
+      </div>
+      <!-- 列表页的秒杀模块 -->
+      <div class="sk">
+        <img src="images/sk.png" alt="" />
+      </div>
+      <!-- search搜索模块 -->
+      <div class="search">
+        <input type="search" name="" id="" placeholder="搜索商品" />
+        <button>搜索</button>
+      </div>
+
+      <div class="logout">退出登录</div>
+    </header>
+    <!-- header头部模块制作 end -->
+
+    <nav class="nav"></nav>
+
+    <!-- 列表页主体部分 -->
+    <div class="w">
+      <div class="items_box">
+        <div class="items_img"></div>
+        <div class="items_detail">
+          <form
+            onsubmit="return false;"
+            action="javascript:void (0)"
+            method="post"
+            enctype="multipart/form-data"
+            id="formItems"
+          >
+            <li>
+              <p id="itemRace">商品类：</p>
+            </li>
+            <li>
+              <p id="itemName">商品名：</p>
+            </li>
+            <li>
+              <p>卖价:</p>
+              <i class="cprice">
+                <em>
+                  ￥
+                  <input type="text" name="price" value="" />
+                </em>
+              </i>
+            </li>
+            <li>
+              <p>进价:</p>
+              <i class="cprice">
+                <em>
+                  ￥
+                  <input type="text" name="purchase_price" value="" />
+                </em>
+              </i>
+              <br />
+            </li>
+            <li>
+              <div class="buy_box">
+                <i>现存：</i>
+                <button id="buy_des">-</button>
+                <input type="text" name="quantity" value="1" id="quantity" />
+                <button id="buy_add">+</button>
+                <button id="upload_button" type="button">提交更改</button>
+              </div>
+              <input type="file" name="photo" style="display: none" />
+            </li>
+          </form>
+        </div>
+      </div>
+      <!-- <div class="cprice">
+            <h>7900</h4>
+        </div> -->
+    </div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="./js/search.js"></script>
+  <script src="./js/ifLogIn.js"></script>
+  <script>
+    //把url转换为对象的方法
+    function getQuery(url) {
+      const index = url.indexOf("?");
+      const obj = {};
+      if (index === -1) return obj;
+      const queryStr = url.slice(index + 1);
+      const arr = queryStr.split("&");
+      for (item of arr) {
+        const keyValue = item.split("=");
+        obj[keyValue[0]] = keyValue[1];
+      }
+      return obj;
+    }
+
+    //获取页面url
+    let Url = window.location.search;
+    console.log(Url);
+    let urlData = getQuery(Url);
+
+    //用async来异步获取，更改信息
+    (async () => {
+      //获取该商品信息  定义info，保存返回的信息
+      let info = await axios.get(`api/singleItem${Url}`).then(res => {
+        let info = res.data;
+        return info;
+      });
+      //给页面加上商品图片
+      let itemsImg = document.querySelector(".items_img");
+      itemsImg.innerHTML = `<img src="data:image/jpeg;base64,${info.pictures}" title="${info.name}">`;
+
+      /*给此页加上商品信息*/
+
+      let infoInputs = document.querySelector("#formItems").querySelectorAll("input");
+      console.log(infoInputs);
+      let formData = new FormData();
+      console.log(info);
+      //给页面加上信息
+      document.querySelector("#itemRace").innerHTML = "商品类：" + urlData.race;
+      document.querySelector("#itemName").innerHTML = "商品名：" + urlData.item;
+      infoInputs[0].value = info.price;
+      infoInputs[1].value = info.purchase_price;
+      infoInputs[2].value = info.quantity;
+
+      /*给图片绑定点击事件：上传照片*/
+      itemsImg.addEventListener("click", e => {
+        infoInputs[3].click(); //infoInputs[4]即为上传文件的input
+      });
+
+      /*给file input绑定事件：改变后，让这个页面的图片更改*/
+      infoInputs[3].addEventListener("change", () => {
+        //以FormData形式获取表单
+        let formData = new FormData(document.querySelector("#formItems"));
+        let file = formData.get("photo"); ///获取文件
+
+        const reader = new FileReader(); // 3 新建 FileReader 对象,用于操作文件
+        reader.readAsDataURL(file); // 4 将文件转换成指定类型的数据
+        reader.onload = ev => {
+          //文件转换完成后，将其加载为本页面的图像
+          const base64Url = ev.target.result; // 5 base64内容
+          itemsImg.querySelector("img").src = `${base64Url}`;
+        };
+      });
+    })();
+
+    //购买数量加减
+    let buy_des = document.querySelector("#buy_des");
+    let buy_add = document.querySelector("#buy_add");
+    let quantity = document.querySelector("#quantity");
+    buy_add.addEventListener("click", () => {
+      let i = quantity.value;
+      if (i >= 10000) {
+        quantity.value = 10000;
+        return;
+      }
+      quantity.value++;
+    });
+    buy_des.addEventListener("click", () => {
+      let i = quantity.value;
+      if (i <= 0) {
+        quantity.value = 0;
+        return;
+      }
+      i--;
+      quantity.value = i;
+    });
+
+    //数量限制：不能超过10000，不能小于0
+    quantity.addEventListener("blur", function () {
+      if (this.value <= 0) this.value = 0;
+      else if (this.value >= 10000) this.value = 10000;
+    });
+
+    //提交购买信息
+    let upload_button = document.querySelector("#upload_button");
+    upload_button.addEventListener("click", () => {
+      if (confirm("确定更改吗？")) {
+        //以FormData形式获取表单
+        let formData = new FormData(document.querySelector("#formItems"));
+        formData.append("race", urlData.race);
+        formData.append("name", urlData.item);
+        //post发送给 updateItem接口
+        axios
+          .post("/api/updateItem", formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+          })
+          .then(res => {
+            console.log(res);
+            //保存返回的newName
+            localStorage.setItem("newName", res.data.newName);
+          });
+      }
+    });
+  </script>
+</html>
